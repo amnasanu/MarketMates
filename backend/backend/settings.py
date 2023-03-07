@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # installed apps
-    'base',
+    'authentication',
+    
     #thired pary apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'djoser'
 ]
 
 REST_FRAMEWORK = {
@@ -51,6 +53,21 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
  
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+DJOSER = {
+    'LOGIN_FIELD' : 'email',
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL':True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
+    'SERIALIZERS': {},
 }
 
 MIDDLEWARE = [
@@ -136,4 +153,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "base.User"
+AUTH_USER_MODEL = 'authentication.User'
+
+#Email Configuration
+EMAIL_USE_TLS = True  
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587  
+EMAIL_HOST_USER = 'amnasanu100@gmail.com'  
+EMAIL_HOST_PASSWORD = 'utquoihfalxixyun'  
