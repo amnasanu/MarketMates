@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     #thired pary apps
     'rest_framework',
     'rest_framework_simplejwt',
-    'djoser'
+    'djoser',
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -61,16 +62,25 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'LOGIN_FIELD' : 'email',
+    'USER_CREATE_PASSWORD_RETYPE':True,
+    'SET_USERNAME_RETYPE' :True,
+    'SET_PASSWORD_RETYPE' :True,
     'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL':True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
-    'SERIALIZERS': {},
+    'SERIALIZERS': {
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+        'user': 'djoser.serializers.UserSerializer',
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+    },
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -161,3 +171,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  
 EMAIL_HOST_USER = 'amnasanu100@gmail.com'  
 EMAIL_HOST_PASSWORD = 'utquoihfalxixyun'  
+
+CORS_ALLOW_ALL_ORIGINS = True
